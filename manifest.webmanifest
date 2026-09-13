@@ -1,0 +1,29 @@
+{
+  "name": "Bahasa Quest",
+  "short_name": "Bahasa Quest",
+  "description": "Pengembaraan pembelajaran Bahasa Melayu Tahun 3 — latihan topik peperiksaan, analisis kemajuan dan laporan ibu bapa.",
+  "start_url": "./",
+  "scope": "./",
+  "id": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0d0a06",
+  "theme_color": "#0d0a06",
+  "categories": ["education", "games", "kids"],
+  "lang": "ms",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-maskable.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}
