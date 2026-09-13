@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+<meta name="theme-color" content="#0d0a06" />
+<title>Bahasa Quest</title>
+
+<!-- ===== PWA: boleh dipasang pada iPhone (Add to Home Screen) & Android (Install) ===== -->
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+<link rel="icon" type="image/svg+xml" sizes="any" href="icons/icon.svg" />
+<link rel="apple-touch-icon" href="icons/icon.svg" />
+<link rel="mask-icon" href="favicon.svg" color="#c98a2b" />
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Bahasa Quest" />
+<meta name="application-name" content="Bahasa Quest" />
+<meta name="format-detection" content="telephone=no" />
+
+<link rel="preconnect" href="https://www.gstatic.com" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- Semua skrin dijana oleh js/ui.js -->
+    <div id="screen" class="screen"></div>
+    <div id="toast-host"></div>
+  </div>
+
+  <!-- Firebase (compat build = tiada bundler / tiada build step) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+  <!-- Kod aplikasi (susunan penting — tiada build step) -->
+  <script src="js/firebase-config.js"></script>
+  <script src="js/art.js"></script>
+  <script src="js/questions_exam.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/sound.js"></script>
+  <script src="js/firebase.js"></script>
+  <script src="js/report.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
