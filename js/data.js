@@ -24,7 +24,8 @@
       desc: "Latihan mengikut topik peperiksaan Bahasa Melayu Tahun 3, Semester 2.",
       topics: [
         { id: "kosa_kata",         label: "Kosa Kata",             desc: "Perbendaharaan kata" },
-        { id: "kata_tanya",        label: "Kata Tanya",            desc: "Apa, siapa, bila, mengapa, bagaimana…" },
+        { id: "kata_tanya",        label: "Kata Tanya",            desc: "Apa, siapa, bila, mengapa, bagaimana…",
+          catLabels: { lengkap_ayat: "Lengkapkan ayat", pilih_ayat: "Pilih ayat tanya", bulatkan: "Pilih jawapan betul" } },
         { id: "kata_pasif",        label: "Kata Pasif",            desc: "Ayat pasif" },
         { id: "kata_hubung",       label: "Kata Hubung",           desc: "dan, tetapi, kerana, supaya…" },
         { id: "kata_arah",         label: "Kata Arah",             desc: "atas, bawah, dalam, luar, antara…" },
