@@ -11,7 +11,7 @@ What is in this first version:
 | Login / create account (email + password) | ✅ built |
 | Switch Player (multiple kids under one account) | ✅ built |
 | Parent Report | ✅ built |
-| Exam Preparation → **Tahun 3 — Semester 2** | ✅ 9 topics + final challenge test wired up, question banks to be added |
+| Exam Preparation → **Tahun 3 — Semester 2** | ✅ 8 topics + final challenge test, 590 questions loaded |
 | Exam Preparation → **History & Analysis** | ✅ built (best/worst/average, trend, weakest area, per-topic deep dive) |
 | Choose Your Adventure (*Pilih Pengembaraan*) | 🔒 shows **Akan Datang** (coming soon) |
 
@@ -100,20 +100,17 @@ player, sessions and Parent Report follow.
 
 | Topic id (use this in the question bank) | Shown as | Session |
 |---|---|---|
-| `kosa_kata` | Kosa Kata | 15 questions |
-| `kata_tanya` | Kata Tanya | 15 questions |
-| `kata_pasif` | Kata Pasif | 15 questions |
-| `kata_hubung` | Kata Hubung | 15 questions |
-| `kata_arah` | Kata Arah | 15 questions |
+| `kata_tanya` | Kata Tanya | 15 per session (100 loaded) |
+| `kata_pasif` | Kata Pasif — kata kerja pasif | 15 per session (80 loaded) |
+| `kata_hubung` | Kata Hubung | 15 per session (80 loaded) |
+| `kata_arah` | Kata Arah | 15 per session (80 loaded) |
 | `kata_waktu` | Kata Waktu — adjektif waktu | 15 per session (80 loaded) |
-| `kata_perintah` | Kata Perintah | 15 questions |
-| `bina_ayat` | Bina Ayat | 15 questions |
-| `penulisan` | Penulisan | 15 questions |
-| `timbul_tenggelam` | Timbul atau Tenggelam | 15 questions |
+| `kata_perintah` | Kata Perintah | 15 per session (80 loaded) |
+| `timbul_tenggelam` | Timbul atau Tenggelam | 15 per session (80 loaded) |
 | `ejaan` | Ejaan — **listen & spell** | 10 words (already filled in) |
-| `cabaran_akhir` | 🏅 Ujian Cabaran Akhir | **8 questions from each of the 11 topics above (88 total)** |
+| `cabaran_akhir` | 🏅 Ujian Cabaran Akhir | **8 questions from each of the 8 topics above (64 total)** |
 
-The challenge test has no bank of its own — it draws from the eleven topic banks,
+The challenge test has no bank of its own — it draws from the eight topic banks,
 so it grows automatically as banks are filled in. Topics with no bank yet show
 **Akan datang**, and the challenge landing screen lists which topics are ready.
 After a challenge run, the results, History & Analysis and the topic deep-dive
