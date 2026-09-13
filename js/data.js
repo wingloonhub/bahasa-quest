@@ -37,7 +37,8 @@
           catLabels: { kata_perintah: "Kata perintah" } },
         { id: "bina_ayat",         label: "Bina Ayat",             desc: "Membina ayat yang lengkap & betul" },
         { id: "penulisan",         label: "Penulisan",             desc: "Karangan pendek" },
-        { id: "timbul_tenggelam",  label: "Timbul atau Tenggelam", desc: "Petikan & pemahaman" },
+        { id: "timbul_tenggelam",  label: "Timbul atau Tenggelam", desc: "Ramalan objek dalam air — timbul atau tenggelam",
+          catLabels: { timbul_tenggelam: "Timbul / tenggelam" } },
         { id: "ejaan",             label: "Ejaan",                 desc: "Dengar perkataan, kemudian eja",
           catLabels: { kata_arah: "Kata arah" } },
         {
