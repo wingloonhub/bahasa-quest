@@ -11,10 +11,10 @@
    ===================================================================== */
 
 window.FIREBASE_CONFIG = {
-  apiKey:            "PASTE_API_KEY",
-  authDomain:        "PASTE_AUTH_DOMAIN",
-  projectId:         "PASTE_PROJECT_ID",
-  storageBucket:     "PASTE_STORAGE_BUCKET",
-  messagingSenderId: "PASTE_SENDER_ID",
-  appId:             "PASTE_APP_ID"
+  apiKey:            "AIzaSyCYTm5TsddoBz7tJ0Mf6D__NI_yBwtV2N8",
+  authDomain:        "bahasa-quest.firebaseapp.com",
+  projectId:         "bahasa-quest",
+  storageBucket:     "bahasa-quest.firebasestorage.app",
+  messagingSenderId: "501817321251",
+  appId:             "1:501817321251:web:165e4bb08ae055cd1cce96"
 };
