@@ -105,14 +105,15 @@ player, sessions and Parent Report follow.
 | `kata_pasif` | Kata Pasif | 15 questions |
 | `kata_hubung` | Kata Hubung | 15 questions |
 | `kata_arah` | Kata Arah | 15 questions |
+| `kata_waktu` | Kata Waktu — adjektif waktu | 15 per session (80 loaded) |
 | `kata_perintah` | Kata Perintah | 15 questions |
 | `bina_ayat` | Bina Ayat | 15 questions |
 | `penulisan` | Penulisan | 15 questions |
 | `timbul_tenggelam` | Timbul atau Tenggelam | 15 questions |
 | `ejaan` | Ejaan — **listen & spell** | 10 words (already filled in) |
-| `cabaran_akhir` | 🏅 Ujian Cabaran Akhir | **8 questions from each of the 10 topics above (80 total)** |
+| `cabaran_akhir` | 🏅 Ujian Cabaran Akhir | **8 questions from each of the 11 topics above (88 total)** |
 
-The challenge test has no bank of its own — it draws from the ten topic banks,
+The challenge test has no bank of its own — it draws from the eleven topic banks,
 so it grows automatically as banks are filled in. Topics with no bank yet show
 **Akan datang**, and the challenge landing screen lists which topics are ready.
 After a challenge run, the results, History & Analysis and the topic deep-dive

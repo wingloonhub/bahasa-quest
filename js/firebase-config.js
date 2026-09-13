@@ -2,12 +2,10 @@
    TETAPAN FIREBASE  —  INI SATU-SATUNYA FAIL YANG PERLU DIUBAH TANGAN
    =====================================================================
 
-   Ikut README.md ("Langkah 2 — Firebase") untuk mendapatkan 6 nilai ini
-   dari Firebase console (Project settings -> Your apps -> Web app).
+   Nilai di bawah diambil dari Firebase console
+   (Project settings -> Your apps -> Web app -> SDK setup and configuration).
 
-   Tampal nilai di antara tanda petik, simpan, kemudian muat naik semula
-   fail ini ke GitHub. Sebelum ini dibuat, permainan tetap berjalan tetapi
-   log masuk / simpanan awan dimatikan (simpan pada peranti ini sahaja).
+   Projek: bahasa-quest
    ===================================================================== */
 
 window.FIREBASE_CONFIG = {

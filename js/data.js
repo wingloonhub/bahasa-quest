@@ -28,6 +28,8 @@
         { id: "kata_pasif",        label: "Kata Pasif",            desc: "Ayat pasif" },
         { id: "kata_hubung",       label: "Kata Hubung",           desc: "dan, tetapi, kerana, supaya…" },
         { id: "kata_arah",         label: "Kata Arah",             desc: "atas, bawah, dalam, luar, antara…" },
+        { id: "kata_waktu",        label: "Kata Waktu",            desc: "Kata adjektif waktu — awal, lewat, baharu, lama",
+          catLabels: { adjektif_waktu: "Kata adjektif waktu" } },
         { id: "kata_perintah",     label: "Kata Perintah",         desc: "sila, tolong, jangan, harap…" },
         { id: "bina_ayat",         label: "Bina Ayat",             desc: "Membina ayat yang lengkap & betul" },
         { id: "penulisan",         label: "Penulisan",             desc: "Karangan pendek" },
