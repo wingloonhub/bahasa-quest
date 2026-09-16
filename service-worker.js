@@ -1,6 +1,6 @@
 /* service-worker.js — cache ringkas supaya aplikasi boleh dibuka sebagai PWA.
    Strategi: network-first untuk HTML, cache-first untuk aset statik. */
-const CACHE = "bahasa-quest-v1";
+const CACHE = "bahasa-quest-v2";
 const ASSETS = [
   "./",
   "./index.html",

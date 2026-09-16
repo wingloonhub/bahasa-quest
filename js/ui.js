@@ -575,7 +575,12 @@
       setId: examState.setId, topicId: examState.topicId,
       ts: Date.now(), total, correct, byCat: examState.byCat,
       bySection: examState.challenge ? examState.bySection : null,
-      mistakes
+      mistakes,
+      // Senarai penuh setiap soalan — untuk skrin butiran sesi.
+      answers: examState.answers.map(a => ({
+        q: a.stem, c: a.chosenText, a: a.answerText, ok: a.correct ? 1 : 0,
+        cat: a.q.cat || "?", sec: a.q.sourceTopic || null
+      }))
     });
 
     // Ujian Cabaran Akhir — pecahan mengikut topik (kukuh → lemah).
@@ -848,12 +853,15 @@
 
     const recent = history.slice(0, 10).map(h => {
       const band = pctBand(h.pct);
-      return `<div class="hist-session">
+      return `<div class="hist-session clickable" data-ts="${h.ts}">
         <div class="hist-session-row">
           <span class="hist-session-topic">${esc(labelOfTopic(h.topicId))}</span>
           <span class="${band.cls}">${h.correct}/${h.total} · ${h.pct}%</span>
         </div>
-        <div class="hist-session-when muted">${esc(agoLabel(h.ts))}</div>
+        <div class="hist-session-row">
+          <span class="hist-session-when muted">${esc(agoLabel(h.ts))}</span>
+          <span class="hist-session-more">Lihat butiran ›</span>
+        </div>
       </div>`;
     }).join("");
 
@@ -883,6 +891,102 @@
     screen().querySelectorAll(".hist-topic-card").forEach(card => {
       card.onclick = () => renderExamTopicDetail(card.dataset.topic);
     });
+    screen().querySelectorAll(".hist-session[data-ts]").forEach(row => {
+      row.onclick = () => renderSessionDetail(Number(row.dataset.ts), renderExamHistory);
+    });
+  }
+
+  /* ---------- butiran satu sesi ---------- */
+  function fullDate(ts) {
+    try {
+      return new Date(ts).toLocaleString("ms-MY", { weekday: "long", day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "2-digit" });
+    } catch (e) { return new Date(ts).toLocaleString(); }
+  }
+
+  function renderSessionDetail(ts, onBack) {
+    const p = STORE.active();
+    const history = (p && p.exam && p.exam.history) || [];
+    const s = history.filter(h => h.ts === ts)[0];
+    if (!s) { onBack(); return; }
+
+    const label = labelOfTopic(s.topicId);
+    const band = pctBand(s.pct);
+    const topicDef = (window.DATA && DATA.anyTopic) ? DATA.anyTopic(s.topicId) : null;
+    const isChallenge = !!(topicDef && topicDef.challengeMode);
+
+    // Pecahan: ikut topik (Cabaran Akhir) atau ikut bahagian (topik biasa).
+    const src = isChallenge && s.bySection ? s.bySection : (s.byCat || {});
+    const breakRows = Object.keys(src).map(k => {
+      const r = src[k];
+      const acc = r.total ? r.correct / r.total : 0;
+      return { label: isChallenge ? labelOfTopic(k) : catLabel(s.topicId, k), correct: r.correct, total: r.total, pct: Math.round(acc * 100), acc };
+    }).sort((a, b) => a.acc - b.acc);
+    const breakCards = breakRows.map(r => `<div class="rep-card">
+      <div class="t"><span>${esc(r.label)}</span>
+        <span class="${r.acc >= 0.8 ? "tag-strong" : r.acc >= 0.55 ? "tag-mid" : "tag-weak"}">${r.pct}%</span></div>
+      <div class="sub">${r.correct} / ${r.total} betul</div>
+      <div class="bar"><i style="width:${r.pct}%;background:${r.acc >= 0.8 ? "#4ec46a" : r.acc >= 0.55 ? "#e0a83a" : "#e2554d"}"></i></div>
+    </div>`).join("");
+
+    // Senarai soalan. Sesi lama (sebelum kemas kini ini) hanya ada kesilapan.
+    const hasFull = Array.isArray(s.answers) && s.answers.length > 0;
+    const items = hasFull
+      ? s.answers.map(a => ({ q: a.q, chosen: a.c, answer: a.a, ok: !!a.ok, sec: a.sec }))
+      : (s.mistakes || []).map(m => ({ q: m.q, chosen: m.chosen, answer: m.answer, ok: false, sec: null }));
+    const wrongCount = items.filter(i => !i.ok).length;
+
+    function itemsHtml(onlyWrong) {
+      const list = items.map((it, i) => ({ it, n: i + 1 })).filter(x => !onlyWrong || !x.it.ok);
+      if (!list.length) return `<div class="muted" style="text-align:center;padding:14px">🎉 Tiada jawapan salah dalam sesi ini.</div>`;
+      return list.map(({ it, n }) => `<div class="ans-row ${it.ok ? "ans-ok" : "ans-bad"}">
+        <div class="ans-head">
+          <span class="ans-num">${hasFull ? "S" + n : "❌"}</span>
+          <span class="ans-q">${esc(it.q || "Soalan")}</span>
+          ${hasFull ? `<span class="ans-mark">${it.ok ? "✅" : "❌"}</span>` : ""}
+        </div>
+        ${isChallenge && it.sec ? `<div class="ans-sec muted">${esc(labelOfTopic(it.sec))}</div>` : ""}
+        ${it.ok
+          ? `<div class="sub" style="color:#9cf0b3">Jawapan: <b>${esc(it.answer)}</b></div>`
+          : `<div class="sub" style="color:#ffa6a1">Jawapan anak: <b>${esc(it.chosen)}</b></div>
+             <div class="sub" style="color:#9cf0b3">Jawapan betul: <b>${esc(it.answer)}</b></div>`}
+      </div>`).join("");
+    }
+
+    const filterBar = hasFull ? `<div class="ans-filter">
+        <button class="btn sm primary" data-f="all">Semua (${items.length})</button>
+        <button class="btn sm ghost" data-f="wrong">Salah sahaja (${wrongCount})</button>
+      </div>` : `<div class="summary-box" style="margin-bottom:10px;font-size:13px">Sesi ini direkodkan sebelum butiran penuh disimpan — hanya kesilapan yang ditunjukkan.</div>`;
+
+    screen().innerHTML = `
+      <div class="topbar"><span class="back" id="bk">← Kembali</span><h2>Butiran Sesi</h2></div>
+      <div class="page" style="max-width:760px;margin:0 auto">
+        <div class="card" style="max-width:none;text-align:center">
+          <div class="hist-topic-name">${isChallenge ? "🏅 " : ""}${esc(label)}</div>
+          <div class="muted" style="font-size:13px;margin-top:4px">${esc(fullDate(s.ts))} · ${esc(agoLabel(s.ts))}</div>
+          <div class="exam-score">${s.pct}%</div>
+          <div class="muted" style="font-weight:700">${s.correct} / ${s.total} betul</div>
+          <div style="margin-top:8px"><span class="${band.cls}">${band.txt}</span></div>
+        </div>
+        ${breakCards ? `<h1 style="font-size:20px;margin:22px 0 10px">${isChallenge ? "Mengikut topik" : "Mengikut bahagian"} (lemah → kukuh)</h1><div class="rep-grid">${breakCards}</div>` : ""}
+        <h1 style="font-size:20px;margin:22px 0 10px">${hasFull ? "Setiap soalan" : "Kesilapan"}</h1>
+        ${filterBar}
+        <div class="ans-list" id="ansList">${itemsHtml(false)}</div>
+        <div class="row" style="margin-top:22px">
+          <button class="btn ghost" id="backBtn">← Kembali</button>
+        </div>
+      </div>`;
+    $("#bk").onclick = onBack;
+    $("#backBtn").onclick = onBack;
+    screen().querySelectorAll(".ans-filter [data-f]").forEach(btn => {
+      btn.onclick = () => {
+        screen().querySelectorAll(".ans-filter [data-f]").forEach(b => {
+          b.classList.toggle("primary", b === btn);
+          b.classList.toggle("ghost", b !== btn);
+        });
+        $("#ansList").innerHTML = itemsHtml(btn.dataset.f === "wrong");
+      };
+    });
+    window.scrollTo(0, 0);
   }
 
   /* ---------- analisis terperinci satu topik ---------- */
@@ -949,11 +1053,12 @@
     const sessionList = sessions.map((s, i) => {
       const b = pctBand(s.pct);
       const tag = i === 0 ? "Terkini" : ("#" + (sessions.length - i));
-      return `<div class="hist-session">
+      return `<div class="hist-session clickable" data-ts="${s.ts}">
         <div class="hist-session-row">
           <span class="hist-session-topic">${tag} · <span class="muted">${esc(agoLabel(s.ts))}</span></span>
           <span class="${b.cls}">${s.correct}/${s.total} · ${s.pct}%</span>
         </div>
+        <div class="hist-session-row"><span></span><span class="hist-session-more">Lihat butiran ›</span></div>
       </div>`;
     }).join("");
 
@@ -1046,6 +1151,9 @@
     $("#bk").onclick = renderExamHistory;
     $("#backBtn").onclick = renderExamHistory;
     $("#practiceBtn").onclick = () => renderExamPrepTopic(setId, topicId);
+    screen().querySelectorAll(".hist-session[data-ts]").forEach(row => {
+      row.onclick = () => renderSessionDetail(Number(row.dataset.ts), () => renderExamTopicDetail(topicId));
+    });
   }
 
   /* ===================== LAPORAN IBU BAPA ===================== */

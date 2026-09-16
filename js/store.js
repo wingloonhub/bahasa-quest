@@ -159,10 +159,13 @@
         pct:      entry.total ? Math.round(entry.correct / entry.total * 100) : 0,
         byCat:    entry.byCat || {},
         bySection: entry.bySection || null,   // hanya untuk Ujian Cabaran Akhir
-        mistakes: (entry.mistakes || []).slice(0, 10)
+        mistakes: (entry.mistakes || []).slice(0, 10),
+        answers:  entry.answers || null       // semua soalan sesi ini (untuk butiran sesi)
       };
       p.exam.history.unshift(clean);
       p.exam.history = p.exam.history.slice(0, 50);
+      // Senarai penuh hanya disimpan untuk 15 sesi terkini supaya dokumen awan kekal kecil.
+      p.exam.history.forEach(function (h, i) { if (i >= 15 && h.answers) delete h.answers; });
       // Tulis segera — sesi yang siap tidak boleh hilang kalau tab ditutup.
       STORE.save({ immediate: true });
     },
